@@ -9,9 +9,11 @@ class PriceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = Get.find<AppController>();
-    return ElevatedButton(
-      child: const Text("Consultar"),
-      onPressed: () => box.loadPriceList(),
+    return Center(
+      child: ElevatedButton(
+        child: const Text("Consultar"),
+        onPressed: () => box.loadPriceList(),
+      ),
     );
   }
 }

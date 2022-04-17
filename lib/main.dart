@@ -1,6 +1,6 @@
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import 'package:flutter_precio_luz/home.dart';
+import 'package:flutter_precio_luz/screens/home/home.dart';
 import 'package:flutter_precio_luz/models.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
