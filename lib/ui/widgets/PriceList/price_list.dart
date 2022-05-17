@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_precio_luz/models.dart';
+import 'package:flutter_precio_luz/controllers/app_controller.dart';
 import 'package:get/get.dart';
-import 'controller.dart';
 
 class PriceList extends StatelessWidget {
   const PriceList({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class PriceList extends StatelessWidget {
     return Center(
       child: ElevatedButton(
         child: const Text("Consultar"),
-        onPressed: () => box.loadPriceList(),
+        onPressed: () => box.getPriceList(),
       ),
     );
   }

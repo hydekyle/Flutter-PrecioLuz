@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_precio_luz/models.dart';
-import 'package:flutter_precio_luz/widgets/PriceList/view.dart';
-import 'package:titled_navigation_bar/titled_navigation_bar.dart';
+import 'package:flutter_precio_luz/controllers/app_controller.dart';
 import 'package:get/get.dart';
+import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: PriceList(),
-      bottomNavigationBar: BottomNavBar(),
-    );
-  }
-}
-
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
+class NavbarButtom extends StatelessWidget {
+  const NavbarButtom({
     Key? key,
   }) : super(key: key);
 

@@ -1,10 +1,7 @@
-//import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-import 'package:flutter_precio_luz/screens/home/home.dart';
-import 'package:flutter_precio_luz/models.dart';
+import 'package:flutter_precio_luz/ui/pages/home.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'app_routes.dart';
+import 'controllers/app_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,4 +20,13 @@ class App extends StatelessWidget {
       home: const HomeScreen(),
     );
   }
+}
+
+class AppRoutes {
+  AppRoutes._();
+  static const String home = '/main';
+
+  static final routes = [
+    GetPage(name: home, page: () => const HomeScreen()),
+  ];
 }
