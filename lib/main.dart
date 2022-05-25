@@ -25,7 +25,6 @@ class App extends StatelessWidget {
 class AppRoutes {
   AppRoutes._();
   static const String home = '/main';
-
   static final routes = [
     GetPage(name: home, page: () => const HomeScreen()),
   ];

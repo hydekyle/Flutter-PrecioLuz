@@ -15,9 +15,10 @@ class AppController extends GetxController {
   init() async {
     storage = await SharedPreferences.getInstance();
     alarmManager.init();
+    getTodayPriceDataList();
   }
 
-  getPriceList() async {
+  getTodayPriceDataList() async {
     _loadPriceList();
   }
 
@@ -26,10 +27,10 @@ class AppController extends GetxController {
     final dataEncoded = jsonEncode(response.body);
     final Map<String, dynamic> jsonData = jsonDecode(dataEncoded);
     priceList.clear();
-    jsonData.forEach((key, value) {
+    jsonData.forEach((key, value) async {
       var price = PriceData.fromJSON(value);
       priceList.add(price);
-      print(price.hour);
+      await Future.delayed(const Duration(seconds: 1));
     });
   }
 }

@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: PriceList(),
+      body: SafeArea(child: PriceList()),
       bottomNavigationBar: NavbarButtom(),
     );
   }
