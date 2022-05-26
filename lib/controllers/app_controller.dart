@@ -28,10 +28,9 @@ class AppController extends GetxController {
     final dataEncoded = jsonEncode(response.body);
     final Map<String, dynamic> jsonData = jsonDecode(dataEncoded);
     priceList.clear();
-    jsonData.forEach((key, value) async {
+    jsonData.forEach((key, value) {
       var price = PriceData.fromJSON(value);
       priceList.add(price);
-      await Future.delayed(const Duration(seconds: 1));
     });
   }
 }

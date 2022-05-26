@@ -36,7 +36,8 @@ class PriceList extends StatelessWidget {
                     () => PieChart(
                       PieChartData(
                         sections: getSections(box.priceList),
-                        startDegreeOffset: -90,
+                        startDegreeOffset: 90,
+                        sectionsSpace: 1.5,
                       ),
                       swapAnimationCurve: Curves.easeIn, // Optional
                     ),
@@ -97,7 +98,7 @@ class PaintNightArc extends CustomPainter {
       ..shader = const RadialGradient(
         colors: [
           Color.fromARGB(255, 184, 184, 184),
-          Color.fromARGB(97, 46, 43, 199),
+          Color.fromARGB(98, 225, 255, 135),
         ],
       ).createShader(Rect.fromCircle(
         center: Offset.zero,
@@ -129,7 +130,7 @@ class PaintDayArc extends CustomPainter {
       ..shader = const RadialGradient(
         colors: [
           Color.fromARGB(255, 232, 231, 231),
-          Color.fromARGB(98, 225, 255, 135),
+          Color.fromARGB(126, 39, 37, 133),
         ],
       ).createShader(Rect.fromCircle(
         center: Offset.zero,
