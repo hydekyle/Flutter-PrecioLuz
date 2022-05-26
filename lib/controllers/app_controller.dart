@@ -23,6 +23,7 @@ class AppController extends GetxController {
   }
 
   _loadPriceList() async {
+    if (priceList.isNotEmpty) return;
     var response = await api.getPriceList();
     final dataEncoded = jsonEncode(response.body);
     final Map<String, dynamic> jsonData = jsonDecode(dataEncoded);
