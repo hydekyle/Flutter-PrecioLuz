@@ -7,10 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AppController extends GetxController {
   late final SharedPreferences storage;
-  final List<PriceData> priceList = List<PriceData>.empty().obs;
   final Api api = Api();
   final AlarmManager alarmManager = AlarmManager();
   final navbarIndex = 0.obs;
+  final List<PriceData> priceList = List<PriceData>.empty().obs;
+  final minPrice = (0.0).obs, maxPrice = (0.0).obs;
 
   init() async {
     storage = await SharedPreferences.getInstance();
@@ -32,5 +33,9 @@ class AppController extends GetxController {
       var price = PriceData.fromJSON(value);
       priceList.add(price);
     });
+    var orderedList = <PriceData>[...priceList];
+    orderedList.sort((a, b) => a.price.compareTo(b.price));
+    minPrice.value = orderedList.first.price;
+    maxPrice.value = orderedList.last.price;
   }
 }

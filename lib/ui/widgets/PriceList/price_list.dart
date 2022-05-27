@@ -12,59 +12,43 @@ class PriceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = Get.find<AppController>();
-    return Center(
-      child: Stack(
-        children: [
-          CustomPaint(
-            painter: PaintNightArc(),
-            foregroundPainter: PaintDayArc(),
-            child: Container(),
-          ),
-          Center(
-            child: Container(
-              height: context.height / 3.2,
-              margin: EdgeInsets.only(bottom: context.height / 2.35),
-              child: Image.asset("images/AstroWheel.png"),
-            ),
-          ),
-          Column(
-            children: [
-              Flexible(
-                flex: 5,
-                child: SizedBox(
-                  child: Obx(
-                    () => PieChart(
-                      PieChartData(
-                        sections: getSections(box.priceList),
-                        startDegreeOffset: 90,
-                        sectionsSpace: 1.5,
-                      ),
-                      swapAnimationCurve: Curves.easeIn, // Optional
-                    ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        CustomPaint(
+          painter: PaintCircle(),
+          child: Container(),
+        ),
+        SizedBox(
+          height: context.height / 3.2,
+          child: Image.asset("images/AstroWheel.png"),
+        ),
+        Column(
+          children: [
+            Flexible(
+              child: Obx(
+                () => PieChart(
+                  PieChartData(
+                    sections: getSections(box.priceList),
+                    startDegreeOffset: 90,
+                    sectionsSpace: 1.5,
                   ),
+                  swapAnimationCurve: Curves.easeIn,
                 ),
               ),
-              Flexible(
-                flex: 5,
-                child: ElevatedButton(
-                  onPressed: () => box.getTodayPriceDataList(),
-                  child: const Text("Press me"),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
+            ),
+          ],
+        )
+      ],
     );
   }
 
   getSections(List<PriceData> priceList) {
     if (priceList.isEmpty) return;
     List<PieChartSectionData> sectionList = <PieChartSectionData>[];
-    var orderedList = <PriceData>[...priceList];
-    orderedList.sort((a, b) => a.price.compareTo(b.price));
-    var min = orderedList.first.price;
-    var max = orderedList.last.price;
+    final box = Get.find<AppController>();
+    var max = box.maxPrice.value;
+    var min = box.minPrice.value;
     var dif = max - min;
     for (var element in priceList) {
       var cheapRate = (max - element.price) / dif;
@@ -91,61 +75,22 @@ class PriceList extends StatelessWidget {
   }
 }
 
-class PaintNightArc extends CustomPainter {
+class PaintCircle extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint1 = Paint()
       ..shader = const RadialGradient(
         colors: [
-          Color.fromARGB(255, 184, 184, 184),
-          Color.fromARGB(98, 225, 255, 135),
+          Color.fromARGB(255, 255, 225, 0),
+          Color.fromARGB(171, 35, 0, 212),
         ],
       ).createShader(Rect.fromCircle(
-        center: Offset.zero,
-        radius: size.height / 6,
+        center: size.topCenter(Offset(0, size.height / 10)),
+        radius: size.height * 1.1,
       ));
-    canvas.translate(size.width / 2, size.height / 4);
-    canvas.drawArc(
-      Rect.fromCenter(
-        center: Offset.zero,
-        height: size.height / 2.5,
-        width: size.width / 1.5,
-      ),
-      math.pi,
-      math.pi,
-      false,
-      paint1,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
-}
-
-class PaintDayArc extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint1 = Paint()
-      ..style = PaintingStyle.fill
-      ..shader = const RadialGradient(
-        colors: [
-          Color.fromARGB(255, 232, 231, 231),
-          Color.fromARGB(126, 39, 37, 133),
-        ],
-      ).createShader(Rect.fromCircle(
-        center: Offset.zero,
-        radius: size.height / 6,
-      ));
-    canvas.translate(size.width / 2, size.height / 4);
-    canvas.drawArc(
-      Rect.fromCenter(
-        center: Offset.zero,
-        height: size.height / 2.5,
-        width: size.width / 1.5,
-      ),
-      0,
-      math.pi,
-      false,
+    canvas.drawCircle(
+      size.center(Offset.zero),
+      size.width / 1.98,
       paint1,
     );
   }
