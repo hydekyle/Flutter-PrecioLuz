@@ -24,11 +24,6 @@ class NavbarButtom extends StatelessWidget {
             title: const Text('HOY'),
             icon: const Icon(Icons.today),
           ),
-          TitledNavigationBarItem(
-            backgroundColor: Theme.of(context).colorScheme.background,
-            title: const Text('MAÑANA'),
-            icon: const Icon(Icons.airline_stops_rounded),
-          ),
         ]);
   }
 }

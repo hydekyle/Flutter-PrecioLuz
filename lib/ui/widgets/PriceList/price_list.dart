@@ -35,7 +35,6 @@ class PriceWheel extends StatelessWidget {
                   PieChartData(
                     sections: getSections(priceList),
                     startDegreeOffset: 90,
-                    sectionsSpace: 1.5,
                   ),
                   swapAnimationCurve: Curves.easeIn,
                 ),
