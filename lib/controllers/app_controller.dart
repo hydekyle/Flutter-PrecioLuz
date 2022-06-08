@@ -10,12 +10,12 @@ class AppController extends GetxController {
   final Api api = Api();
   final AlarmManager alarmManager = AlarmManager();
   final navbarIndex = 0.obs;
-  final List<PriceData> priceList = List<PriceData>.empty().obs;
+  final priceList = List<PriceData>.empty().obs;
   final minPrice = (0.0).obs, maxPrice = (0.0).obs;
 
   init() async {
     storage = await SharedPreferences.getInstance();
-    alarmManager.init();
+    //alarmManager.init();
     getTodayPriceDataList();
   }
 
@@ -24,7 +24,6 @@ class AppController extends GetxController {
   }
 
   _loadPriceList() async {
-    if (priceList.isNotEmpty) return;
     var response = await api.getPriceList();
     final dataEncoded = jsonEncode(response.body);
     final Map<String, dynamic> jsonData = jsonDecode(dataEncoded);
@@ -32,6 +31,7 @@ class AppController extends GetxController {
     jsonData.forEach((key, value) {
       var price = PriceData.fromJSON(value);
       priceList.add(price);
+      print(value);
     });
     var orderedList = <PriceData>[...priceList];
     orderedList.sort((a, b) => a.price.compareTo(b.price));

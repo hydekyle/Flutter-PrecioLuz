@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_precio_luz/controllers/app_controller.dart';
 import 'package:flutter_precio_luz/models/price_data_model.dart';
 import 'package:get/get.dart';
-import 'dart:math' as math;
-import 'dart:ui' as ui;
 
-class PriceList extends StatelessWidget {
-  const PriceList({Key? key}) : super(key: key);
+class PriceWheel extends StatelessWidget {
+  final List<PriceData> priceList;
+  const PriceWheel({Key? key, required this.priceList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final box = Get.find<AppController>();
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -29,7 +27,7 @@ class PriceList extends StatelessWidget {
               child: Obx(
                 () => PieChart(
                   PieChartData(
-                    sections: getSections(box.priceList),
+                    sections: getSections(priceList),
                     startDegreeOffset: 90,
                     sectionsSpace: 1.5,
                   ),

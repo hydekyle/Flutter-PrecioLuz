@@ -15,17 +15,15 @@ class PriceHighestAndLowest extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Flexible(
-          flex: 1,
           child: Container(
             color: Colors.green,
-            child: Text("Bajo"),
+            child: const Text("Bajo"),
           ),
         ),
         Flexible(
-          flex: 5,
           child: Container(
             color: Colors.red,
-            child: Text("alto"),
+            child: const Text("alto"),
           ),
         ),
       ],

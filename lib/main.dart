@@ -13,7 +13,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put<AppController>(AppController(), permanent: true);
     return GetMaterialApp(
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
