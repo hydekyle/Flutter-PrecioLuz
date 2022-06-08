@@ -5,8 +5,14 @@ import 'package:flutter_precio_luz/models/price_data_model.dart';
 import 'package:get/get.dart';
 
 class PriceWheel extends StatelessWidget {
+  final Icon cheapIcon, expensiveIcon;
   final List<PriceData> priceList;
-  const PriceWheel({Key? key, required this.priceList}) : super(key: key);
+  const PriceWheel({
+    Key? key,
+    required this.priceList,
+    required this.cheapIcon,
+    required this.expensiveIcon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,27 +51,25 @@ class PriceWheel extends StatelessWidget {
     if (priceList.isEmpty) return;
     List<PieChartSectionData> sectionList = <PieChartSectionData>[];
     final box = Get.find<AppController>();
-    var max = box.maxPrice.value;
-    var min = box.minPrice.value;
+    var max = box.maxPriceData.value.price;
+    var min = box.minPriceData.value.price;
     var dif = max - min;
     for (var element in priceList) {
       var cheapRate = (max - element.price) / dif;
-      print("${cheapRate.toPrecision(2)}:${element.price}:${element.hour}");
+      //print("${cheapRate.toPrecision(2)}:${element.price}:${element.hour}");
       sectionList.add(PieChartSectionData(
         title: element.hour,
         color: getColorByCheapRate(cheapRate),
         badgeWidget: getBadgeByCheapRate(cheapRate),
-        badgePositionPercentageOffset: 1,
+        badgePositionPercentageOffset: -0.4,
       ));
     }
     return sectionList;
   }
 
   getBadgeByCheapRate(double cheapRate) {
-    if (cheapRate == 0.0)
-      return const Icon(Icons.warning_amber_outlined, color: Colors.yellow);
-    if (cheapRate == 1.0)
-      return const Icon(Icons.lightbulb_outline, color: Colors.blue);
+    if (cheapRate == 0.0) return expensiveIcon;
+    if (cheapRate == 1.0) return cheapIcon;
   }
 
   getColorByCheapRate(double cheapRate) {

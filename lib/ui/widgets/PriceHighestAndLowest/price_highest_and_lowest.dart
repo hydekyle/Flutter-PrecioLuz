@@ -1,29 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_precio_luz/controllers/app_controller.dart';
 import 'package:flutter_precio_luz/models/price_data_model.dart';
-import 'package:get/get.dart';
 
-class PriceHighestAndLowest extends StatelessWidget {
-  const PriceHighestAndLowest({Key? key}) : super(key: key);
+class PriceMinAndMax extends StatelessWidget {
+  final PriceData min, max;
+  final Icon cheapIcon, expensiveIcon;
+  const PriceMinAndMax({
+    Key? key,
+    required this.min,
+    required this.max,
+    required this.cheapIcon,
+    required this.expensiveIcon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final box = Get.find<AppController>();
-
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Flexible(
-          child: Container(
-            color: Colors.green,
-            child: const Text("Bajo"),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.green),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      cheapIcon,
+                      const Text(
+                        "Precio más BAJO",
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  color: Colors.green,
+                  child: Column(children: [
+                    const Icon(Icons.alarm),
+                    Text(min.hour),
+                    const Spacer(),
+                    Text(min.price.toString()),
+                    Text(min.units),
+                  ]),
+                ),
+              ),
+            ],
           ),
         ),
         Flexible(
-          child: Container(
-            color: Colors.red,
-            child: const Text("alto"),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      expensiveIcon,
+                      const Text(
+                        "Precio más ALTO",
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  color: Colors.red,
+                  child: Column(children: [
+                    const Icon(Icons.alarm),
+                    Text(max.hour),
+                    const Spacer(),
+                    Text(max.price.toString()),
+                    Text(max.units),
+                  ]),
+                ),
+              ),
+            ],
           ),
         ),
       ],

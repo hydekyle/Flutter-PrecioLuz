@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -31,8 +28,8 @@ class AlarmManager {
           tz.TZDateTime.from(scheludedTime, tz.local),
           const NotificationDetails(
             android: AndroidNotificationDetails(
-              "leonsepia_alarmas",
-              "alarmas",
+              "time_alarm",
+              "Alarms",
             ),
           ),
           androidAllowWhileIdle: true,

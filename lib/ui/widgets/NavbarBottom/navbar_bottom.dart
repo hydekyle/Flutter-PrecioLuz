@@ -13,21 +13,21 @@ class NavbarButtom extends StatelessWidget {
     final navbarIndex = Get.find<AppController>().navbarIndex;
     return TitledBottomNavigationBar(
         currentIndex: navbarIndex.value,
+        activeColor: Theme.of(context).colorScheme.onPrimary,
+        reverse: true,
         onTap: (index) {
           navbarIndex.value = index;
         },
         items: [
           TitledNavigationBarItem(
-            title: const Text('Home1'),
-            icon: const Icon(Icons.home),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            title: const Text('HOY'),
+            icon: const Icon(Icons.today),
           ),
           TitledNavigationBarItem(
-            title: const Text('Home'),
-            icon: const Icon(Icons.home),
-          ),
-          TitledNavigationBarItem(
-            title: const Text('Home2'),
-            icon: const Icon(Icons.home),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            title: const Text('MAÑANA'),
+            icon: const Icon(Icons.airline_stops_rounded),
           ),
         ]);
   }

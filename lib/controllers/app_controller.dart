@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_precio_luz/controllers/alarm_controller.dart';
 import 'package:flutter_precio_luz/models/price_data_model.dart';
 import 'package:flutter_precio_luz/services/api_service.dart';
@@ -11,7 +13,8 @@ class AppController extends GetxController {
   final AlarmManager alarmManager = AlarmManager();
   final navbarIndex = 0.obs;
   final priceList = List<PriceData>.empty().obs;
-  final minPrice = (0.0).obs, maxPrice = (0.0).obs;
+  final minPriceData = PriceData.empty().obs,
+      maxPriceData = PriceData.empty().obs;
 
   init() async {
     storage = await SharedPreferences.getInstance();
@@ -35,7 +38,7 @@ class AppController extends GetxController {
     });
     var orderedList = <PriceData>[...priceList];
     orderedList.sort((a, b) => a.price.compareTo(b.price));
-    minPrice.value = orderedList.first.price;
-    maxPrice.value = orderedList.last.price;
+    minPriceData.value = orderedList.first;
+    maxPriceData.value = orderedList.last;
   }
 }

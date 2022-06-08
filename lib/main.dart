@@ -15,6 +15,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: AppRoutes.routes,
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
     );

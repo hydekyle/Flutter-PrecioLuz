@@ -6,6 +6,15 @@ class PriceData {
   PriceData(this.date, this.hour, this.market, this.units, this.isCheap,
       this.isUnderAvg, this.price);
 
+  PriceData.empty()
+      : date = "date",
+        hour = "hour",
+        market = "market",
+        units = "units",
+        isCheap = false,
+        isUnderAvg = false,
+        price = 0;
+
   PriceData.fromJSON(Map<String, dynamic> json)
       : date = json["date"],
         hour = json["hour"],
