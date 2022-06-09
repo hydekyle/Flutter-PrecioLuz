@@ -24,7 +24,9 @@ class PriceMinAndMax extends StatelessWidget {
               Flexible(
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color.fromARGB(255, 26, 138, 30)),
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 26, 138, 30),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,11 +43,11 @@ class PriceMinAndMax extends StatelessWidget {
               ),
               Flexible(
                 child: Container(
-                  padding: EdgeInsets.all(10),
-                  color: Color.fromARGB(255, 26, 138, 30),
+                  padding: const EdgeInsets.all(10),
+                  color: const Color.fromARGB(255, 26, 138, 30),
                   child: Column(children: [
                     const Icon(Icons.alarm),
-                    Text(min.hour),
+                    Text("${min.hour.substring(0, 2)}:00"),
                     const Spacer(),
                     Text(min.price.toString()),
                     Text(min.units),
@@ -62,8 +64,23 @@ class PriceMinAndMax extends StatelessWidget {
             children: [
               Flexible(
                 child: Container(
+                  padding: const EdgeInsets.all(10),
+                  color: const Color.fromARGB(255, 189, 31, 20),
+                  child: Column(children: [
+                    const Icon(Icons.alarm),
+                    Text("${max.hour.substring(0, 2)}:00"),
+                    const Spacer(),
+                    Text(max.price.toString()),
+                    Text(max.units),
+                  ]),
+                ),
+              ),
+              Flexible(
+                child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color.fromARGB(255, 189, 31, 20)),
+                    border: Border.all(
+                      color: const Color.fromARGB(255, 189, 31, 20),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,19 +93,6 @@ class PriceMinAndMax extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              ),
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  color: Color.fromARGB(255, 189, 31, 20),
-                  child: Column(children: [
-                    const Icon(Icons.alarm),
-                    Text(max.hour),
-                    const Spacer(),
-                    Text(max.price.toString()),
-                    Text(max.units),
-                  ]),
                 ),
               ),
             ],

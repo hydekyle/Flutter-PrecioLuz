@@ -57,7 +57,7 @@ class PriceWheel extends StatelessWidget {
       var cheapRate = (max - element.price) / dif;
       //print("${cheapRate.toPrecision(2)}:${element.price}:${element.hour}");
       sectionList.add(PieChartSectionData(
-        title: element.hour,
+        title: "${element.hour.substring(0, 2)}h\n${element.price.toInt()}€",
         color: getColorByCheapRate(cheapRate),
         badgeWidget: getBadgeByCheapRate(cheapRate),
         badgePositionPercentageOffset: -0.4,
