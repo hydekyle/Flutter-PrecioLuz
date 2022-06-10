@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_precio_luz/controllers/app_controller.dart';
-import 'package:flutter_precio_luz/ui/widgets/PriceHighestAndLowest/price_highest_and_lowest.dart';
-import 'package:flutter_precio_luz/ui/widgets/PriceWheel/price_wheel.dart';
+import 'package:flutter_precio_luz/ui/widgets/price_highest_and_lowest.dart';
+import 'package:flutter_precio_luz/ui/widgets/price_wheel.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Flexible(
                           flex: 8,
@@ -40,9 +41,12 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Flexible(
                           flex: 2,
-                          child: Text(
-                            "HOY\n${box.priceList.first.date}",
-                            textAlign: TextAlign.center,
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(0, 18, 0, 4),
+                            child: Text(
+                              "HOY\n${box.priceList.first.date}",
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                         Flexible(
@@ -57,15 +61,46 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Flexible(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Theme.of(context).backgroundColor),
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    child: const Icon(Icons.menu),
+                                  ),
+                                  onPressed: () => showMaterialModalBottomSheet(
+                                    context: context,
+                                    builder: (context) => Container(),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.all(12),
+                                  child: Text(
+                                    "Tarifa PVPC\n${box.regionZone.value == RegionZone.PCB ? 'Península, Canarias y Baleares' : 'Ceuta y Melilla'}",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
         ),
-      ),
-      bottomNavigationBar: const Text(
-        "Tarifa PVPC\nDatos obtenidos de REE (Red Eléctrica de España)",
-        textAlign: TextAlign.center,
       ),
     );
   }
