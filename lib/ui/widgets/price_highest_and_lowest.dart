@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_precio_luz/models/price_data_model.dart';
+import 'package:get/get.dart';
+import '../../models/price_data_model.dart';
+import '../../controllers/app_controller.dart';
 
 class PriceMinAndMax extends StatelessWidget {
   final PriceData min, max;
-  final Icon cheapIcon, expensiveIcon;
   const PriceMinAndMax({
     Key? key,
     required this.min,
     required this.max,
-    required this.cheapIcon,
-    required this.expensiveIcon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final box = Get.find<AppController>();
     return Row(
       children: [
         Flexible(
@@ -32,7 +32,7 @@ class PriceMinAndMax extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      cheapIcon,
+                      box.cheapIcon,
                       const Text(
                         "Precio más BAJO",
                         textAlign: TextAlign.center,
@@ -86,7 +86,7 @@ class PriceMinAndMax extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      expensiveIcon,
+                      box.expensiveIcon,
                       const Text(
                         "Precio más ALTO",
                         textAlign: TextAlign.center,

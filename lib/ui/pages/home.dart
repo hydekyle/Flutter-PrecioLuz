@@ -5,16 +5,10 @@ import 'package:flutter_precio_luz/ui/widgets/price_wheel.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../widgets/modal_bottom_sheet.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  final cheapIcon = const Icon(
-    Icons.stars_rounded,
-    color: Colors.green,
-  );
-  final expensiveIcon = const Icon(
-    Icons.warning_rounded,
-    color: Colors.red,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       body: GetBuilder<AppController>(
         init: AppController()..init(),
         builder: (box) => Obx(
-          () => box.priceList.isEmpty
+          () => !box.isDataLoaded.value
               ? const Center(child: CircularProgressIndicator())
               : SafeArea(
                   child: Padding(
@@ -34,17 +28,14 @@ class HomeScreen extends StatelessWidget {
                         Flexible(
                           flex: 8,
                           child: PriceWheel(
-                            priceList: box.priceList,
-                            cheapIcon: cheapIcon,
-                            expensiveIcon: expensiveIcon,
-                          ),
+                              priceList: box.getRegionData().priceList),
                         ),
                         Flexible(
                           flex: 2,
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(0, 18, 0, 4),
+                            padding: const EdgeInsets.fromLTRB(0, 18, 0, 4),
                             child: Text(
-                              "HOY\n${box.priceList.first.date}",
+                              "HOY\n${box.getRegionData().priceList.first.date}",
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -54,10 +45,8 @@ class HomeScreen extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 18.0),
                             child: PriceMinAndMax(
-                              min: box.minPriceData.value,
-                              max: box.maxPriceData.value,
-                              cheapIcon: cheapIcon,
-                              expensiveIcon: expensiveIcon,
+                              min: box.getRegionData().minPriceData,
+                              max: box.getRegionData().maxPriceData,
                             ),
                           ),
                         ),
@@ -78,16 +67,23 @@ class HomeScreen extends StatelessWidget {
                                     child: const Icon(Icons.menu),
                                   ),
                                   onPressed: () => showMaterialModalBottomSheet(
-                                    context: context,
-                                    builder: (context) => Container(),
-                                  ),
+                                      context: context,
+                                      expand: false,
+                                      builder: (context) => Obx(
+                                            () => MenuBottomSheet(
+                                              selectedGraphicType:
+                                                  box.selectedGraphicType.value,
+                                              selectedRegionZone:
+                                                  box.selectedRegionZone.value,
+                                            ),
+                                          )),
                                 ),
                               ),
                               Expanded(
                                 child: Container(
                                   margin: const EdgeInsets.all(12),
                                   child: Text(
-                                    "Tarifa PVPC\n${box.regionZone.value == RegionZone.PCB ? 'Península, Canarias y Baleares' : 'Ceuta y Melilla'}",
+                                    "Tarifa PVPC\n${box.selectedRegionZone.value == RegionZone.PCB ? 'Península, Canarias y Baleares' : 'Ceuta y Melilla'}",
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(fontSize: 12),
                                   ),

@@ -16,7 +16,10 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppRoutes.routes,
       theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        buttonColor: Colors.orange[700],
+      ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
