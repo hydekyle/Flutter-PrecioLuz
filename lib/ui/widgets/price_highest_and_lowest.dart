@@ -32,7 +32,7 @@ class PriceMinAndMax extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      box.cheapIcon,
+                      box.iconCheap,
                       const Text(
                         "Precio más BAJO",
                         textAlign: TextAlign.center,
@@ -86,7 +86,7 @@ class PriceMinAndMax extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      box.expensiveIcon,
+                      box.iconExpensive,
                       const Text(
                         "Precio más ALTO",
                         textAlign: TextAlign.center,

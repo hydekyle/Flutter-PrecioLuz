@@ -2,6 +2,7 @@ class PriceData {
   final String date, hour, market, units;
   final bool isCheap, isUnderAvg;
   final double price;
+  late double cheapRate;
 
   PriceData(this.date, this.hour, this.market, this.units, this.isCheap,
       this.isUnderAvg, this.price);

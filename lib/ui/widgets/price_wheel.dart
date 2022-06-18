@@ -27,14 +27,12 @@ class PriceWheel extends StatelessWidget {
         Column(
           children: [
             Flexible(
-              child: Obx(
-                () => PieChart(
-                  PieChartData(
-                    sections: getSections(priceList),
-                    startDegreeOffset: 90,
-                  ),
-                  swapAnimationCurve: Curves.easeIn,
+              child: PieChart(
+                PieChartData(
+                  sections: getSections(priceList),
+                  startDegreeOffset: 90,
                 ),
+                swapAnimationCurve: Curves.easeIn,
               ),
             ),
           ],
@@ -44,32 +42,16 @@ class PriceWheel extends StatelessWidget {
   }
 
   getSections(List<PriceData> priceList) {
-    if (priceList.isEmpty) return;
     List<PieChartSectionData> sectionList = <PieChartSectionData>[];
-    final box = Get.find<AppController>();
-    var max = box.getRegionData().maxPriceData.price;
-    var min = box.getRegionData().minPriceData.price;
-    var dif = max - min;
     for (var element in priceList) {
-      var cheapRate = (max - element.price) / dif;
       sectionList.add(PieChartSectionData(
         title: "${element.hour.substring(0, 2)}h\n${element.price.toInt()}€",
-        color: getColorByCheapRate(cheapRate),
+        color: AppController.getColorByCheapRate(element.cheapRate),
         badgePositionPercentageOffset: -0.4,
-        badgeWidget:
-            getBadgeByCheapRate(cheapRate, box.expensiveIcon, box.cheapIcon),
+        badgeWidget: AppController.getBadgeByCheapRate(element.cheapRate),
       ));
     }
     return sectionList;
-  }
-
-  getBadgeByCheapRate(double cheapRate, Icon expensiveIcon, Icon cheapIcon) {
-    if (cheapRate == 0.0) return expensiveIcon;
-    if (cheapRate == 1.0) return cheapIcon;
-  }
-
-  getColorByCheapRate(double cheapRate) {
-    return Color.lerp(Colors.red, Colors.green, cheapRate);
   }
 }
 

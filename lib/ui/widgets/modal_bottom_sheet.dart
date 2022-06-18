@@ -98,13 +98,14 @@ class MenuBottomSheet extends StatelessWidget {
                                 box.selectedRegionZone.value = RegionZone.PCB;
                               },
                               child: Container(
+                                alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: colorButton),
                                   color: selectedRegionZone == RegionZone.PCB
                                       ? colorButton
                                       : null,
                                 ),
-                                child: const Icon(Icons.access_time_rounded),
+                                child: const Text("PCB"),
                               ),
                             ),
                           ),
@@ -117,13 +118,14 @@ class MenuBottomSheet extends StatelessWidget {
                                 box.selectedRegionZone.value = RegionZone.CYM;
                               },
                               child: Container(
+                                alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: colorButton),
                                   color: selectedRegionZone == RegionZone.CYM
                                       ? colorButton
                                       : null,
                                 ),
-                                child: const Icon(Icons.bar_chart_sharp),
+                                child: const Text("CYM"),
                               ),
                             ),
                           ),

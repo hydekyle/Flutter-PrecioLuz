@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../widgets/modal_bottom_sheet.dart';
+import '../widgets/price_chart.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,8 +28,12 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Flexible(
                           flex: 8,
-                          child: PriceWheel(
-                              priceList: box.getRegionData().priceList),
+                          child:
+                              box.selectedGraphicType.value == GraphicType.wheel
+                                  ? PriceWheel(
+                                      priceList: box.getRegionData().priceList)
+                                  : PriceChart(
+                                      priceList: box.getRegionData().priceList),
                         ),
                         Flexible(
                           flex: 2,

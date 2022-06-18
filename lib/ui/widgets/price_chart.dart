@@ -1,58 +1,21 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/price_data_model.dart';
+
 class PriceChart extends StatelessWidget {
-  const PriceChart({Key? key}) : super(key: key);
+  final List<PriceData> priceList;
+  const PriceChart({
+    Key? key,
+    required this.priceList,
+  }) : super(key: key);
 
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = 'Jan';
-        break;
-      case 1:
-        text = 'Feb';
-        break;
-      case 2:
-        text = 'Mar';
-        break;
-      case 3:
-        text = 'Apr';
-        break;
-      case 4:
-        text = 'May';
-        break;
-      case 5:
-        text = 'Jun';
-        break;
-      case 6:
-        text = 'Jul';
-        break;
-      case 7:
-        text = 'Aug';
-        break;
-      case 8:
-        text = 'Sep';
-        break;
-      case 9:
-        text = 'Oct';
-        break;
-      case 10:
-        text = 'Nov';
-        break;
-      case 11:
-        text = 'Dec';
-        break;
-      default:
-        return Container();
-    }
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 4,
-      child: Text(text, style: _dateTextStyle),
-    );
-  }
+  Widget bottomTitleWidgets(double value, TitleMeta meta) => SideTitleWidget(
+        axisSide: meta.axisSide,
+        space: 4,
+        child: Text(priceList[value.toInt()].hour.substring(0, 2) + "h",
+            style: _dateTextStyle),
+      );
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(color: Colors.black, fontSize: 12.0);
@@ -60,6 +23,14 @@ class PriceChart extends StatelessWidget {
       axisSide: meta.axisSide,
       child: Text('\$ ${value + 0.5}', style: style),
     );
+  }
+
+  List<FlSpot> getPriceSpotList() {
+    List<FlSpot> spotList = [];
+    for (var x = 0; x < priceList.length; x++) {
+      spotList.add(FlSpot(x.toDouble(), priceList[x].price));
+    }
+    return spotList;
   }
 
   static const _dateTextStyle = TextStyle(
@@ -73,28 +44,15 @@ class PriceChart extends StatelessWidget {
     const cutOffYValue = 5.0;
 
     return AspectRatio(
-      aspectRatio: 2.4,
+      aspectRatio: 1.5,
       child: Padding(
-        padding: const EdgeInsets.only(left: 12, right: 24),
+        padding: const EdgeInsets.only(left: 1, right: 12),
         child: LineChart(
           LineChartData(
             lineTouchData: LineTouchData(enabled: false),
             lineBarsData: [
               LineChartBarData(
-                spots: const [
-                  FlSpot(0, 4),
-                  FlSpot(1, 3.5),
-                  FlSpot(2, 4.5),
-                  FlSpot(3, 1),
-                  FlSpot(4, 4),
-                  FlSpot(5, 6),
-                  FlSpot(6, 6.5),
-                  FlSpot(7, 6),
-                  FlSpot(8, 4),
-                  FlSpot(9, 6),
-                  FlSpot(10, 6),
-                  FlSpot(11, 7),
-                ],
+                spots: getPriceSpotList(),
                 isCurved: true,
                 barWidth: 8,
                 color: Colors.purpleAccent,
