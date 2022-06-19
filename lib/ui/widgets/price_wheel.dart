@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_precio_luz/controllers/app_controller.dart';
 import 'package:flutter_precio_luz/models/price_data_model.dart';
 import 'package:get/get.dart';
+import '../../models/region_data_model.dart';
 
 class PriceWheel extends StatelessWidget {
-  final List<PriceData> priceList;
+  final RegionData regionData;
   const PriceWheel({
     Key? key,
-    required this.priceList,
+    required this.regionData,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final priceList = regionData.priceList;
     return Stack(
       alignment: Alignment.center,
       children: [

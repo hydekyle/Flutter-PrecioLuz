@@ -15,7 +15,7 @@ class AppController extends GetxController {
   late final SharedPreferences storage;
   final Api _api = Api();
   final _regionDataDic = <RegionZone, RegionData>{};
-  final selectedGraphicType = GraphicType.wheel.obs;
+  final selectedGraphicType = GraphicType.chart.obs;
   final selectedRegionZone = RegionZone.PCB.obs;
   final isDataLoaded = false.obs;
 

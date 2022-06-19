@@ -1,17 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
 import '../../controllers/app_controller.dart';
-import '../../models/price_data_model.dart';
+import '../../models/region_data_model.dart';
 
 class PriceChart extends StatelessWidget {
-  final List<PriceData> priceList;
+  final RegionData regionData;
   const PriceChart({
     Key? key,
-    required this.priceList,
+    required this.regionData,
   }) : super(key: key);
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    final priceList = regionData.priceList;
     final style = TextStyle(
       fontSize: 18,
       color: AppController.getColorByCheapRate(priceList
@@ -40,8 +40,8 @@ class PriceChart extends StatelessWidget {
 
   List<FlSpot> getPriceSpotList() {
     List<FlSpot> spotList = [];
-    for (var x = 0; x < priceList.length; x++) {
-      spotList.add(FlSpot(x.toDouble(), priceList[x].price));
+    for (var x = 0; x < regionData.priceList.length; x++) {
+      spotList.add(FlSpot(x.toDouble(), regionData.priceList[x].price));
     }
     return spotList;
   }
@@ -49,7 +49,7 @@ class PriceChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const cutOffYValue = 5.0;
-    final gradientColors = priceList
+    final priceColors = regionData.priceList
         .map((e) => AppController.getColorByCheapRate(e.cheapRate))
         .toList();
 
@@ -59,21 +59,20 @@ class PriceChart extends StatelessWidget {
         padding: const EdgeInsets.only(left: 1, right: 18),
         child: LineChart(
           LineChartData(
-            lineTouchData: LineTouchData(enabled: false),
+            lineTouchData: LineTouchData(enabled: true),
             lineBarsData: [
               LineChartBarData(
                 spots: getPriceSpotList(),
-                gradient: LinearGradient(colors: gradientColors),
+                gradient: LinearGradient(colors: priceColors),
                 isCurved: true,
-                barWidth: 8,
-                color: Colors.white,
+                barWidth: 6,
                 belowBarData: BarAreaData(
                   show: true,
                   cutOffY: cutOffYValue,
                   applyCutOffY: true,
                   spotsLine: BarAreaSpotsLine(show: true),
                   gradient: LinearGradient(
-                      colors: gradientColors
+                      colors: priceColors
                           .map((e) =>
                               Color.fromRGBO(e.red, e.green, e.blue, 0.5))
                           .toList()),
@@ -85,7 +84,16 @@ class PriceChart extends StatelessWidget {
                   applyCutOffY: true,
                 ),
                 dotData: FlDotData(
-                  show: false,
+                  show: true,
+                  getDotPainter: (spot, v, barData, i) => FlDotSquarePainter(
+                    size: 20,
+                    strokeColor: Colors.yellowAccent,
+                    strokeWidth: 2,
+                    color: priceColors[i],
+                  ),
+                  checkToShowDot: (spot, barData) =>
+                      spot.y == regionData.minPriceData.price ||
+                      spot.y == regionData.maxPriceData.price,
                 ),
               ),
             ],

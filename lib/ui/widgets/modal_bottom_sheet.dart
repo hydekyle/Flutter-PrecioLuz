@@ -42,32 +42,6 @@ class MenuBottomSheet extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 box.selectedGraphicType.value =
-                                    GraphicType.wheel;
-                                AppController.saveUserPreference(
-                                  "selected-price-view",
-                                  EnumToString.convertToString(
-                                      GraphicType.wheel),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: colorButton),
-                                  color:
-                                      selectedGraphicType == GraphicType.wheel
-                                          ? colorButton
-                                          : null,
-                                ),
-                                child: const Icon(Icons.access_time_rounded),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            height: heightButton,
-                            child: GestureDetector(
-                              onTap: () {
-                                box.selectedGraphicType.value =
                                     GraphicType.chart;
                                 AppController.saveUserPreference(
                                   "selected-price-view",
@@ -84,6 +58,32 @@ class MenuBottomSheet extends StatelessWidget {
                                           : null,
                                 ),
                                 child: const Icon(Icons.bar_chart_sharp),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: heightButton,
+                            child: GestureDetector(
+                              onTap: () {
+                                box.selectedGraphicType.value =
+                                    GraphicType.wheel;
+                                AppController.saveUserPreference(
+                                  "selected-price-view",
+                                  EnumToString.convertToString(
+                                      GraphicType.wheel),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: colorButton),
+                                  color:
+                                      selectedGraphicType == GraphicType.wheel
+                                          ? colorButton
+                                          : null,
+                                ),
+                                child: const Icon(Icons.access_time_rounded),
                               ),
                             ),
                           ),

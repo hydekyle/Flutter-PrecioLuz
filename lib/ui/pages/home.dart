@@ -41,10 +41,8 @@ class HomeScreen extends StatelessWidget {
                           flex: 9,
                           child:
                               box.selectedGraphicType.value == GraphicType.wheel
-                                  ? PriceWheel(
-                                      priceList: box.getRegionData().priceList)
-                                  : PriceChart(
-                                      priceList: box.getRegionData().priceList),
+                                  ? PriceWheel(regionData: box.getRegionData())
+                                  : PriceChart(regionData: box.getRegionData()),
                         ),
                         Flexible(
                           flex: 1,
@@ -57,13 +55,11 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         Flexible(
-                          flex: 3,
+                          flex: 4,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 18.0),
-                            child: PriceMinAndMax(
-                              min: box.getRegionData().minPriceData,
-                              max: box.getRegionData().maxPriceData,
-                            ),
+                            child:
+                                PriceMinAndMax(regionData: box.getRegionData()),
                           ),
                         ),
                         Flexible(
