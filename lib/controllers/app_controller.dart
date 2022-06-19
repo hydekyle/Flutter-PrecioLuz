@@ -12,7 +12,7 @@ enum GraphicType { wheel, chart }
 enum RegionZone { PCB, CYM }
 
 class AppController extends GetxController {
-  late final SharedPreferences _storage;
+  late final SharedPreferences storage;
   final Api _api = Api();
   final _regionDataDic = <RegionZone, RegionData>{};
   final selectedGraphicType = GraphicType.wheel.obs;
@@ -29,24 +29,29 @@ class AppController extends GetxController {
   );
 
   init() async {
-    _storage = await SharedPreferences.getInstance();
-    loadUserPreferences();
+    storage = await SharedPreferences.getInstance();
+    _loadUserPreferences();
     _getTodayPriceDataList();
   }
 
   RegionData getRegionData() => _regionDataDic[selectedRegionZone.value]!;
 
-  loadUserPreferences() {
-    if (_storage.containsKey("selected-price-view")) {
-      final _priceViewType = _storage.getString("selected-price-view")!;
+  _loadUserPreferences() {
+    if (storage.containsKey("selected-price-view")) {
+      final _priceViewType = storage.getString("selected-price-view")!;
       selectedGraphicType.value =
           EnumToString.fromString(GraphicType.values, _priceViewType)!;
     }
-    if (_storage.containsKey("selected-zone")) {
-      final _regionZone = _storage.getString("selected-zone")!;
+    if (storage.containsKey("selected-region")) {
+      final _regionZone = storage.getString("selected-region")!;
       selectedRegionZone.value =
           EnumToString.fromString(RegionZone.values, _regionZone)!;
     }
+  }
+
+  static saveUserPreference(String key, String value) {
+    final box = Get.find<AppController>();
+    box.storage.setString(key, value);
   }
 
   _getTodayPriceDataList() async {
@@ -83,7 +88,7 @@ class AppController extends GetxController {
     return null;
   }
 
-  static Color? getColorByCheapRate(double cheapRate) {
-    return Color.lerp(Colors.red, Colors.green, cheapRate);
+  static Color getColorByCheapRate(double cheapRate) {
+    return Color.lerp(Colors.red, Colors.green, cheapRate)!;
   }
 }

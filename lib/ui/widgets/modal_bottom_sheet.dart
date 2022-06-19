@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/app_controller.dart';
@@ -42,6 +43,11 @@ class MenuBottomSheet extends StatelessWidget {
                               onTap: () {
                                 box.selectedGraphicType.value =
                                     GraphicType.wheel;
+                                AppController.saveUserPreference(
+                                  "selected-price-view",
+                                  EnumToString.convertToString(
+                                      GraphicType.wheel),
+                                );
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -63,6 +69,11 @@ class MenuBottomSheet extends StatelessWidget {
                               onTap: () {
                                 box.selectedGraphicType.value =
                                     GraphicType.chart;
+                                AppController.saveUserPreference(
+                                  "selected-price-view",
+                                  EnumToString.convertToString(
+                                      GraphicType.chart),
+                                );
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -96,6 +107,12 @@ class MenuBottomSheet extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 box.selectedRegionZone.value = RegionZone.PCB;
+                                AppController.saveUserPreference(
+                                  "selected-region",
+                                  EnumToString.convertToString(
+                                    RegionZone.PCB,
+                                  ),
+                                );
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -116,6 +133,12 @@ class MenuBottomSheet extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 box.selectedRegionZone.value = RegionZone.CYM;
+                                AppController.saveUserPreference(
+                                  "selected-region",
+                                  EnumToString.convertToString(
+                                    RegionZone.CYM,
+                                  ),
+                                );
                               },
                               child: Container(
                                 alignment: Alignment.center,

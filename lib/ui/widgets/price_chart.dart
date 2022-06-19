@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../controllers/app_controller.dart';
 import '../../models/price_data_model.dart';
 
 class PriceChart extends StatelessWidget {
@@ -10,18 +11,30 @@ class PriceChart extends StatelessWidget {
     required this.priceList,
   }) : super(key: key);
 
-  Widget bottomTitleWidgets(double value, TitleMeta meta) => SideTitleWidget(
-        axisSide: meta.axisSide,
-        space: 4,
-        child: Text(priceList[value.toInt()].hour.substring(0, 2) + "h",
-            style: _dateTextStyle),
-      );
-
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(color: Colors.black, fontSize: 12.0);
+  Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    final style = TextStyle(
+      fontSize: 18,
+      color: AppController.getColorByCheapRate(priceList
+          .firstWhere((element) =>
+              int.parse(element.hour.substring(0, 2)) == value.ceil())
+          .cheapRate),
+      fontWeight: FontWeight.bold,
+    );
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      child: Text('\$ ${value + 0.5}', style: style),
+      space: 4,
+      child: Text(priceList[value.toInt()].hour.substring(0, 2) + "h",
+          style: style),
+    );
+  }
+
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(color: Colors.white, fontSize: 12.0);
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      angle: 0,
+      child:
+          value == 0 ? const Text("") : Text('${value.round()}€', style: style),
     );
   }
 
@@ -33,34 +46,37 @@ class PriceChart extends StatelessWidget {
     return spotList;
   }
 
-  static const _dateTextStyle = TextStyle(
-    fontSize: 10,
-    color: Colors.purple,
-    fontWeight: FontWeight.bold,
-  );
-
   @override
   Widget build(BuildContext context) {
     const cutOffYValue = 5.0;
+    final gradientColors = priceList
+        .map((e) => AppController.getColorByCheapRate(e.cheapRate))
+        .toList();
 
     return AspectRatio(
-      aspectRatio: 1.5,
+      aspectRatio: 1.4,
       child: Padding(
-        padding: const EdgeInsets.only(left: 1, right: 12),
+        padding: const EdgeInsets.only(left: 1, right: 18),
         child: LineChart(
           LineChartData(
             lineTouchData: LineTouchData(enabled: false),
             lineBarsData: [
               LineChartBarData(
                 spots: getPriceSpotList(),
+                gradient: LinearGradient(colors: gradientColors),
                 isCurved: true,
                 barWidth: 8,
-                color: Colors.purpleAccent,
+                color: Colors.white,
                 belowBarData: BarAreaData(
                   show: true,
-                  color: Colors.deepPurple.withOpacity(0.4),
                   cutOffY: cutOffYValue,
                   applyCutOffY: true,
+                  spotsLine: BarAreaSpotsLine(show: true),
+                  gradient: LinearGradient(
+                      colors: gradientColors
+                          .map((e) =>
+                              Color.fromRGBO(e.red, e.green, e.blue, 0.5))
+                          .toList()),
                 ),
                 aboveBarData: BarAreaData(
                   show: true,
@@ -83,27 +99,19 @@ class PriceChart extends StatelessWidget {
                 sideTitles: SideTitles(showTitles: false),
               ),
               bottomTitles: AxisTitles(
-                axisNameWidget: const Text(
-                  '2019',
-                  style: _dateTextStyle,
-                ),
                 sideTitles: SideTitles(
                   showTitles: true,
-                  reservedSize: 18,
-                  interval: 1,
+                  reservedSize: 24,
+                  interval: 4,
                   getTitlesWidget: bottomTitleWidgets,
                 ),
               ),
               leftTitles: AxisTitles(
                 axisNameSize: 20,
-                axisNameWidget: const Padding(
-                  padding: EdgeInsets.only(bottom: 8.0),
-                  child: Text('Value'),
-                ),
                 sideTitles: SideTitles(
                   showTitles: true,
-                  interval: 1,
-                  reservedSize: 40,
+                  interval: 50,
+                  reservedSize: 50,
                   getTitlesWidget: leftTitleWidgets,
                 ),
               ),

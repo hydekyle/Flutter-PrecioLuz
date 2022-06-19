@@ -27,7 +27,18 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Flexible(
-                          flex: 8,
+                          flex: 1,
+                          child: Text(
+                            box.selectedRegionZone.value == RegionZone.PCB
+                                ? 'Península, Canarias y Baleares'
+                                : 'Ceuta y Melilla',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        const Spacer(),
+                        Flexible(
+                          flex: 9,
                           child:
                               box.selectedGraphicType.value == GraphicType.wheel
                                   ? PriceWheel(
@@ -36,11 +47,11 @@ class HomeScreen extends StatelessWidget {
                                       priceList: box.getRegionData().priceList),
                         ),
                         Flexible(
-                          flex: 2,
+                          flex: 1,
                           child: Container(
                             padding: const EdgeInsets.fromLTRB(0, 18, 0, 4),
                             child: Text(
-                              "HOY\n${box.getRegionData().priceList.first.date}",
+                              box.getRegionData().priceList.first.date,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -87,10 +98,10 @@ class HomeScreen extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   margin: const EdgeInsets.all(12),
-                                  child: Text(
-                                    "Tarifa PVPC\n${box.selectedRegionZone.value == RegionZone.PCB ? 'Península, Canarias y Baleares' : 'Ceuta y Melilla'}",
+                                  child: const Text(
+                                    "Tarifa PVPC",
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(fontSize: 12),
+                                    style: TextStyle(fontSize: 12),
                                   ),
                                 ),
                               ),
