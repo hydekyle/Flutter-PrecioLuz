@@ -48,6 +48,7 @@ class MenuBottomSheet extends StatelessWidget {
                                   EnumToString.convertToString(
                                       GraphicType.chart),
                                 );
+                                Get.back();
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -74,6 +75,7 @@ class MenuBottomSheet extends StatelessWidget {
                                   EnumToString.convertToString(
                                       GraphicType.wheel),
                                 );
+                                Get.back();
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -113,6 +115,7 @@ class MenuBottomSheet extends StatelessWidget {
                                     RegionZone.PCB,
                                   ),
                                 );
+                                Get.back();
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -139,6 +142,7 @@ class MenuBottomSheet extends StatelessWidget {
                                     RegionZone.CYM,
                                   ),
                                 );
+                                Get.back();
                               },
                               child: Container(
                                 alignment: Alignment.center,

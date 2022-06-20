@@ -41,15 +41,17 @@ class HomeScreen extends StatelessWidget {
                           flex: 9,
                           child:
                               box.selectedGraphicType.value == GraphicType.wheel
-                                  ? PriceWheel(regionData: box.getRegionData())
-                                  : PriceChart(regionData: box.getRegionData()),
+                                  ? PriceWheel(
+                                      regionData: box.getSelectedRegionData())
+                                  : PriceChart(
+                                      regionData: box.getSelectedRegionData()),
                         ),
                         Flexible(
                           flex: 1,
                           child: Container(
                             padding: const EdgeInsets.fromLTRB(0, 18, 0, 4),
                             child: Text(
-                              box.getRegionData().priceList.first.date,
+                              box.getSelectedRegionData().priceList.first.date,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -58,8 +60,8 @@ class HomeScreen extends StatelessWidget {
                           flex: 4,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 18.0),
-                            child:
-                                PriceMinAndMax(regionData: box.getRegionData()),
+                            child: PriceMinAndMax(
+                                regionData: box.getSelectedRegionData()),
                           ),
                         ),
                         Flexible(
@@ -81,6 +83,7 @@ class HomeScreen extends StatelessWidget {
                                   onPressed: () => showMaterialModalBottomSheet(
                                       context: context,
                                       expand: false,
+                                      enableDrag: false,
                                       builder: (context) => Obx(
                                             () => MenuBottomSheet(
                                               selectedGraphicType:

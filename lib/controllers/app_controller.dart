@@ -34,8 +34,6 @@ class AppController extends GetxController {
     _getTodayPriceDataList();
   }
 
-  RegionData getRegionData() => _regionDataDic[selectedRegionZone.value]!;
-
   _loadUserPreferences() {
     if (storage.containsKey("selected-price-view")) {
       final _priceViewType = storage.getString("selected-price-view")!;
@@ -49,23 +47,18 @@ class AppController extends GetxController {
     }
   }
 
-  static saveUserPreference(String key, String value) {
-    final box = Get.find<AppController>();
-    box.storage.setString(key, value);
-  }
-
   _getTodayPriceDataList() async {
+    // Obtener precios de la API
     for (var regionZone in RegionZone.values) {
       final zoneString = EnumToString.convertToString(regionZone);
       final response = await _api.getPriceList(zoneString);
       final dataEncoded = jsonEncode(response.body);
       final Map<String, dynamic> jsonData = jsonDecode(dataEncoded);
-      // Obter lista de precios
+      // Guardar lista de precios
       final regionData = _regionDataDic[regionZone] = RegionData();
       jsonData.forEach((key, value) {
         var priceData = PriceData.fromJSON(value);
         regionData.priceList.add(priceData);
-        print(value);
       });
       // Calcular max y min
       var orderedList = <PriceData>[...regionData.priceList];
@@ -73,12 +66,25 @@ class AppController extends GetxController {
       var min = regionData.minPriceData = orderedList.first;
       var max = regionData.maxPriceData = orderedList.last;
       var dif = max.price - min.price;
+      // Precálculos para ahorrar CPU en price_chart
+      regionData.maxRounded = max.price.floor().toDouble();
+      regionData.minRounded = min.price.floor().toDouble();
+      regionData.halfRounded =
+          (((max.price - min.price) / 2) + min.price).floor().toDouble();
       // Calcular CheapRates
       for (var element in regionData.priceList) {
         element.cheapRate = (max.price - element.price) / dif;
       }
     }
     isDataLoaded.value = true;
+  }
+
+  RegionData getSelectedRegionData() =>
+      _regionDataDic[selectedRegionZone.value]!;
+
+  static saveUserPreference(String key, String value) {
+    final box = Get.find<AppController>();
+    box.storage.setString(key, value);
   }
 
   static Widget? getBadgeByCheapRate(double cheapRate) {

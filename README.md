@@ -1,3 +1,4 @@
+# Flutter App Using GetX & FLChart
 
-# Flutter App Using GetX
-![Alt text](./app-screenshot.jpg?raw=true "Title")
+![Alt text](./screenshot1.jpg?raw=true "Title")
+![Alt text](./screenshot2.jpg?raw=true "Title")

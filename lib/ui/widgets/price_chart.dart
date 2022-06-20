@@ -29,12 +29,22 @@ class PriceChart extends StatelessWidget {
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(color: Colors.white, fontSize: 12.0);
+    var style = const TextStyle();
+    var text = "";
+    if (value == regionData.minRounded) {
+      text = '${regionData.minPriceData.price.round()}€';
+      style = const TextStyle(color: Colors.green, fontSize: 12.0);
+    } else if (value == regionData.halfRounded) {
+      text = '${value.round()}€';
+      style = const TextStyle(color: Colors.orange, fontSize: 12.0);
+    } else if (value == regionData.maxRounded) {
+      text = '${regionData.maxPriceData.price.round()}€';
+      style = const TextStyle(color: Colors.red, fontSize: 12.0);
+    }
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      angle: 0,
-      child:
-          value == 0 ? const Text("") : Text('${value.round()}€', style: style),
+      child: Text(text, style: style),
     );
   }
 
@@ -44,6 +54,17 @@ class PriceChart extends StatelessWidget {
       spotList.add(FlSpot(x.toDouble(), regionData.priceList[x].price));
     }
     return spotList;
+  }
+
+  bool checkToShowHorizontalBar(double value) {
+    if (value == regionData.minRounded) {
+      return true;
+    } else if (value == regionData.halfRounded) {
+      return true;
+    } else if (value == regionData.maxRounded) {
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -70,11 +91,14 @@ class PriceChart extends StatelessWidget {
                   show: true,
                   cutOffY: cutOffYValue,
                   applyCutOffY: true,
-                  spotsLine: BarAreaSpotsLine(show: true),
+                  spotsLine: BarAreaSpotsLine(
+                    show: true,
+                    checkToShowSpotLine: (spot) => spot.x % 4 == 0,
+                  ),
                   gradient: LinearGradient(
                       colors: priceColors
                           .map((e) =>
-                              Color.fromRGBO(e.red, e.green, e.blue, 0.5))
+                              Color.fromRGBO(e.red, e.green, e.blue, 0.4))
                           .toList()),
                 ),
                 aboveBarData: BarAreaData(
@@ -118,19 +142,18 @@ class PriceChart extends StatelessWidget {
                 axisNameSize: 20,
                 sideTitles: SideTitles(
                   showTitles: true,
-                  interval: 50,
                   reservedSize: 50,
+                  interval: 1,
                   getTitlesWidget: leftTitleWidgets,
                 ),
               ),
             ),
             gridData: FlGridData(
               show: true,
+              drawHorizontalLine: true,
               drawVerticalLine: false,
               horizontalInterval: 1,
-              checkToShowHorizontalLine: (double value) {
-                return value == 1 || value == 6 || value == 4 || value == 5;
-              },
+              checkToShowHorizontalLine: checkToShowHorizontalBar,
             ),
           ),
         ),
