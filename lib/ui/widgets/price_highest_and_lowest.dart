@@ -70,7 +70,7 @@ class PriceMinAndMax extends StatelessWidget {
                     Text("${regionData.maxPriceData.hour.substring(0, 2)}:00"),
                     const Spacer(),
                     Text(regionData.maxPriceData.price.toString()),
-                    Text(regionData.maxPriceData.units),
+                    Text(regionData.units),
                   ]),
                 ),
               ),
